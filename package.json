@@ -2,12 +2,13 @@
   "name": "penny-track-backend",
   "version": "1.0.0",
   "description": "backend and API for Penny Tracker",
-  "main": "index.js",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js",
     "start": "node -r dotenv/config --experimental-json-modules src/index.js"
   },
-  "author": "Divy Koushik Mishra",
+  "author": "Divy Koushik Mishra & Mihir Suman",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
