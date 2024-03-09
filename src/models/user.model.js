@@ -24,24 +24,6 @@ const userSchema = new Schema(
     },
 
     fullName: String,
-    createdNotes: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Notes",
-      },
-    ],
-    createdTodo: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Notes",
-      },
-    ],
-    plannerPro: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "PlannerPro",
-      },
-    ],
     refreshToken: String,
   },
   { timestamps: true }
