@@ -1,1 +1,1 @@
-export const DB_NAME = "penny-tracker";
+export const DB_NAME = "pennyTracker";
