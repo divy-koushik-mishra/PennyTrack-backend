@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { Income } from "../models/Income.js";
+import { Income } from "../models/income.model.js";
 
 const createIncome = asyncHandler(async (req, res) => {
   const { income_descreption, income_category, income_amount } = req.body;

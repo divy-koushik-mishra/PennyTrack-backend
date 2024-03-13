@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { Reminder } from "../models/Reminder.js";
+import { Reminder } from "../models/reminder.model.js";
 
 const createReminder = asyncHandler(async (req, res) => {
   const { title, description } = req.body;

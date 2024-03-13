@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { Expense } from "../models/Expense.js";
+import { Expense } from "../models/expense.model.js";
 
 const createExpense = asyncHandler(async (req, res) => {
   const { expense_descreption, expense_category, expense_amount } = req.body;
