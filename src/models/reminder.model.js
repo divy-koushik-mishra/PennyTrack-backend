@@ -9,14 +9,6 @@ const reminderSchema = new Schema(
     description: {
       type: String,
     },
-    date: {
-      type: Date,
-      required: true,
-    },
-    time: {
-      type: String,
-      required: true,
-    },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",

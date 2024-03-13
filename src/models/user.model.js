@@ -22,6 +22,25 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    income: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Income",
+      },
+    ],
+    expense: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Expense",
+      },
+    ],
+
+    remidner: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Reminder",
+      },
+    ],
 
     fullName: String,
     refreshToken: String,
