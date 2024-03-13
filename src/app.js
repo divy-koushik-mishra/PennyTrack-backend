@@ -18,8 +18,10 @@ app.use(cookieParser());
 
 //  Routes import
 import userRouter from "./routes/user.routes.js";
+import transactionRoute from "./routes/transaction.routes.js";
 
 // Routes declaration
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/transactions", transactionRoute);
 
 export { app };
