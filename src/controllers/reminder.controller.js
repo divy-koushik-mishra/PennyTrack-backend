@@ -4,13 +4,14 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Reminder } from "../models/reminder.model.js";
 
 const createReminder = asyncHandler(async (req, res) => {
-  const { title, description } = req.body;
+  const { title, amount, date } = req.body;
   if ([title].some((field) => field?.trim() === "")) {
-    throw new ApiError(400, "Title is required");
+    throw new ApiError(400, "All fields are required");
   }
   const reminder = await Reminder.create({
     title,
-    description,
+    amount,
+    date,
     user: req.user._id,
   });
 
