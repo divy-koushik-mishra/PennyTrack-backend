@@ -38,6 +38,7 @@ const getExpense = asyncHandler(async (req, res) => {
   if (!expense) {
     throw new ApiError(404, "No expense found");
   }
+
   return res
     .status(200)
     .json(new ApiResponse(200, expense, "Expense retrieved successfully"));
