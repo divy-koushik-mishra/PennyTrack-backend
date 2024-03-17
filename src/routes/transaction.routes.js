@@ -2,6 +2,6 @@ import { Router } from "express";
 
 const router = Router();
 
-router.route("/").post();
+router.route("/getAlltransations").post();
 
 export default router;
