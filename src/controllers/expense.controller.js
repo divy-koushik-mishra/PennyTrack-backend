@@ -4,10 +4,10 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Expense } from "../models/expense.model.js";
 
 const createExpense = asyncHandler(async (req, res) => {
-  const { expense_descreption, expense_category, expense_amount } = req.body;
+  const { expense_description, expense_category, expense_amount } = req.body;
 
   if (
-    [expense_descreption, expense_category, expense_amount].some(
+    [expense_description, expense_category, expense_amount].some(
       (field) => field?.trim() === ""
     )
   ) {
@@ -15,7 +15,7 @@ const createExpense = asyncHandler(async (req, res) => {
   }
 
   const expense = await Expense.create({
-    expense_descreption,
+    expense_description,
     expense_category,
     expense_amount,
     user: req.user._id,
