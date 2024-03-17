@@ -35,6 +35,10 @@ const createExpense = asyncHandler(async (req, res) => {
 const getExpense = asyncHandler(async (req, res) => {
   const expense = await Expense.find({ user: req.user._id, isDeleted: false });
 
+  if (!expense) {
+    throw new ApiError(404, "No expense found");
+  }
+
   return res
     .status(200)
     .json(new ApiResponse(200, expense, "Expense retrieved successfully"));
