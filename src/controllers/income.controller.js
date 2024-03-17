@@ -4,7 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Income } from "../models/income.model.js";
 
 const createIncome = asyncHandler(async (req, res) => {
-  const { income_descreption, income_category, income_amount } = req.body;
+  const { income_description, income_category, income_amount } = req.body;
 
   if (
     [fullName, email, username, password].some((field) => field?.trim() === "")
@@ -13,7 +13,7 @@ const createIncome = asyncHandler(async (req, res) => {
   }
 
   const income = await Income.create({
-    income_descreption,
+    income_description,
     income_category,
     income_amount,
     user: req.user._id,

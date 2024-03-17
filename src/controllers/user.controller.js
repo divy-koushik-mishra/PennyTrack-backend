@@ -33,28 +33,25 @@ const registerUser = asyncHandler(async (req, res) => {
   // check for user creation
   // return res
 
-  const { fullName, email, username, password } = req.body;
+  const { fullName, email, password } = req.body;
   //console.log("email: ", email);
 
-  if (
-    [fullName, email, username, password].some((field) => field?.trim() === "")
-  ) {
+  if ([fullName, email, password].some((field) => field?.trim() === "")) {
     throw new ApiError(400, "All fields are required");
   }
 
   const existedUser = await User.findOne({
-    $or: [{ username }, { email }],
+    $or: [{ email }],
   });
 
   if (existedUser) {
-    throw new ApiError(409, "User with email or username already exists");
+    throw new ApiError(409, "User with email already exists");
   }
 
   const user = await User.create({
     fullName,
     email,
     password,
-    username: username.toLowerCase(),
   });
 
   const createdUser = await User.findById(user._id).select(

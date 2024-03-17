@@ -6,13 +6,19 @@ const reminderSchema = new Schema(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
+    amount: {
+      type: Number,
+      required: true,
+    },
+    date: {
+      type: Date,
+      required: true,
     },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+
     isCompleted: {
       type: Boolean,
       default: false,
