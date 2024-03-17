@@ -13,6 +13,11 @@ const reminderSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    date: {
+      type: Date,
+      required: true,
+    },
+
     isCompleted: {
       type: Boolean,
       default: false,
