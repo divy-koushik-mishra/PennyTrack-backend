@@ -18,6 +18,11 @@ const incomeSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

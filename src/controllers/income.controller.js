@@ -7,7 +7,9 @@ const createIncome = asyncHandler(async (req, res) => {
   const { income_description, income_category, income_amount } = req.body;
 
   if (
-    [fullName, email, username, password].some((field) => field?.trim() === "")
+    [income_description, income_category, income_amount].some(
+      (field) => field?.trim() === ""
+    )
   ) {
     throw new ApiError(400, "All fields are required");
   }
@@ -31,8 +33,9 @@ const createIncome = asyncHandler(async (req, res) => {
 });
 
 const getIncome = asyncHandler(async (req, res) => {
+  console.log("User ID:", req.user._id); // Log user ID
   const income = await Income.find({ user: req.user._id, isDeleted: false });
-
+  console.log("Query:", income); // Log query
   return res
     .status(200)
     .json(new ApiResponse(200, income, "Income retrieved successfully"));
