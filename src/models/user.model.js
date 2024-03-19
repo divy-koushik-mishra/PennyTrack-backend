@@ -35,7 +35,7 @@ const userSchema = new Schema(
       },
     ],
 
-    remidner: [
+    reminder: [
       {
         type: Schema.Types.ObjectId,
         ref: "Reminder",
