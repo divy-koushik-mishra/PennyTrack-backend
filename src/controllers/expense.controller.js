@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Expense } from "../models/expense.model.js";
+import { Transaction } from "../models/transaction.model.js";
 
 const createExpense = asyncHandler(async (req, res) => {
   const { expense_description, expense_category, expense_amount } = req.body;
@@ -18,6 +19,15 @@ const createExpense = asyncHandler(async (req, res) => {
     expense_description,
     expense_category,
     expense_amount,
+    user: req.user._id,
+  });
+  const transactionExpense = await Transaction.create({
+    transaction_description: expense_description,
+    transaction_category: expense_category,
+    transaction_amount: expense_amount,
+    transaction_type: "expense",
+    transaction_date: new Date(),
+    transaction_time: new Date(),
     user: req.user._id,
   });
 
