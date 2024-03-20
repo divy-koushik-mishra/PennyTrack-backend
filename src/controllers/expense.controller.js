@@ -5,10 +5,15 @@ import { Expense } from "../models/expense.model.js";
 import { Transaction } from "../models/transaction.model.js";
 
 const createExpense = asyncHandler(async (req, res) => {
-  const { expense_description, expense_category, expense_amount } = req.body;
+  const {
+    expense_description,
+    expense_category,
+    expense_amount,
+    expense_date,
+  } = req.body;
 
   if (
-    [expense_description, expense_category, expense_amount].some(
+    [expense_description, expense_category, expense_amount, expense_date].some(
       (field) => field?.trim() === ""
     )
   ) {
@@ -19,6 +24,7 @@ const createExpense = asyncHandler(async (req, res) => {
     expense_description,
     expense_category,
     expense_amount,
+    expense_date,
     user: req.user._id,
   });
   const transactionExpense = await Transaction.create({
@@ -75,4 +81,37 @@ const updateExpense = asyncHandler(async (req, res) => {
 
 const deleteExpense = asyncHandler(async (req, res) => {});
 
-export { createExpense, getExpense, updateExpense, deleteExpense };
+const getTotalExpense = asyncHandler(async (req, res) => {
+  const totalExpense = await Expense.aggregate([
+    {
+      $match: {
+        user: req.user._id,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalExpense: { $sum: "$expense_amount" },
+      },
+    },
+  ]);
+
+  console.log(totalExpense);
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        totalExpense[0],
+        "Total expense retrieved successfully"
+      )
+    );
+});
+
+export {
+  createExpense,
+  getExpense,
+  updateExpense,
+  deleteExpense,
+  getTotalExpense,
+};
