@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Reminder } from "../models/reminder.model.js";
+import { User } from "../models/user.model.js";
 import { sendReminderEmail } from "../services/email.service.js";
 
 const createReminder = asyncHandler(async (req, res) => {
@@ -22,17 +23,17 @@ const createReminder = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while creating the reminder");
   }
 
+  //  query to get user email
+  const user = await User.findById(req.user._id);
+
   const reminderDate = createReminder.date;
   const currentDate = new Date();
-  const timeDifference = reminderDate - currentDate;
-  const daysDifference = timeDifference / (1000 * 3600 * 24);
-  if (daysDifference < 1) {
-    sendReminderEmail(
-      req.user.email,
-      "Reminder",
-      `You have a reminder for ${title} on ${date}`
-    );
-  }
+
+  sendReminderEmail(
+    user.email,
+    "Reminder",
+    `You have a reminder for ${title} on ${date}`
+  );
 
   return res
     .status(201)

@@ -4,8 +4,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "divysuggests@gmail.com",
-    pass: "divy@123",
+    user: process.env.EMAIL_ADDRESS,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
@@ -18,9 +18,10 @@ const transporter = nodemailer.createTransport({
  */
 
 const sendReminderEmail = asyncHandler(async (toEmail, subject, text) => {
+  console.log("entered the function");
   try {
     await transporter.sendMail({
-      from: "divysuggests@gmail.com",
+      from: process.env.EMAIL_ADDRESS,
       to: toEmail,
       subject,
       text,
