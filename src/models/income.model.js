@@ -14,6 +14,10 @@ const incomeSchema = new Schema(
       type: Number,
       required: true,
     },
+    income_date: {
+      type: Date,
+      required: true,
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",

@@ -5,10 +5,11 @@ import { Income } from "../models/income.model.js";
 import { Transaction } from "../models/transaction.model.js";
 
 const createIncome = asyncHandler(async (req, res) => {
-  const { income_description, income_category, income_amount } = req.body;
+  const { income_description, income_category, income_amount, income_date } =
+    req.body;
 
   if (
-    [income_description, income_category, income_amount].some(
+    [income_description, income_category, income_amount, income_date].some(
       (field) => field?.trim() === ""
     )
   ) {
@@ -19,6 +20,7 @@ const createIncome = asyncHandler(async (req, res) => {
     income_description,
     income_category,
     income_amount,
+    income_date,
     user: req.user._id,
   });
 
@@ -62,4 +64,31 @@ const updateIncome = asyncHandler(async (req, res) => {
 
 const deleteIncome = asyncHandler(async (req, res) => {});
 
-export { createIncome, getIncome, updateIncome, deleteIncome };
+const getTotalIncome = asyncHandler(async (req, res) => {
+  const totalIncome = await Income.aggregate([
+    {
+      $match: {
+        user: req.user._id,
+        isDeleted: false,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalIncome: { $sum: "$income_amount" },
+      },
+    },
+  ]);
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        totalIncome[0],
+        "Total income retrieved successfully"
+      )
+    );
+});
+
+export { createIncome, getIncome, updateIncome, deleteIncome, getTotalIncome };
