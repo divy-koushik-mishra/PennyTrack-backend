@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
  * @returns {Promise<void>}
  */
 
-const sendReminderEmail = asyncHandler(async (toEmail, subject, text) => {
+const sendEmail = asyncHandler(async (toEmail, subject, text) => {
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_ADDRESS,
@@ -30,4 +30,4 @@ const sendReminderEmail = asyncHandler(async (toEmail, subject, text) => {
   }
 });
 
-export { sendReminderEmail };
+export { sendEmail };
