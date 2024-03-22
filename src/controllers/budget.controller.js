@@ -74,10 +74,11 @@ const getBudget = asyncHandler(async (req, res) => {
   ]);
 
   if (totalSpent.total > budget_amount) {
+    console.log("Budget Exceeded");
     sendEmail(
       user.email,
-      "Reminder",
-      `You have a reminder for ${title} on ${date}`
+      "Budget Exceeded",
+      `You have exceeded your ${title} budget.`
     );
   }
   if (!budget) {
