@@ -4,7 +4,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Transaction } from "../models/transaction.model.js";
 
 const getTransaction = asyncHandler(async (req, res) => {
-  console.log(req.user._id);
   const transaction = await Transaction.find({
     user: req.user._id,
   });

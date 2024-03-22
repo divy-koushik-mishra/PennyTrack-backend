@@ -3,7 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Reminder } from "../models/reminder.model.js";
 import { User } from "../models/user.model.js";
-import { sendReminderEmail } from "../services/email.service.js";
+import { sendEmail } from "../services/email.service.js";
 
 const createReminder = asyncHandler(async (req, res) => {
   const { title, amount, date } = req.body;
@@ -29,7 +29,7 @@ const createReminder = asyncHandler(async (req, res) => {
   const reminderDate = createReminder.date;
   const currentDate = new Date();
 
-  sendReminderEmail(
+  sendEmail(
     user.email,
     "Reminder",
     `You have a reminder for ${title} on ${date}`

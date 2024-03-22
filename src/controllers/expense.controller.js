@@ -49,7 +49,6 @@ const createExpense = asyncHandler(async (req, res) => {
 });
 
 const getExpense = asyncHandler(async (req, res) => {
-  console.log(req.user._id);
   const expense = await Expense.find({
     user: req.user._id,
   });
@@ -96,7 +95,6 @@ const getTotalExpense = asyncHandler(async (req, res) => {
     },
   ]);
 
-  console.log(totalExpense);
   return res
     .status(200)
     .json(

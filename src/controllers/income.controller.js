@@ -46,9 +46,7 @@ const createIncome = asyncHandler(async (req, res) => {
 });
 
 const getIncome = asyncHandler(async (req, res) => {
-  console.log("User ID:", req.user._id); // Log user ID
   const income = await Income.find({ user: req.user._id, isDeleted: false });
-  console.log("Query:", income); // Log query
   return res
     .status(200)
     .json(new ApiResponse(200, income, "Income retrieved successfully"));

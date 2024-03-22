@@ -34,7 +34,6 @@ const registerUser = asyncHandler(async (req, res) => {
   // return res
 
   const { fullName, email, password } = req.body;
-  //console.log("email: ", email);
 
   if ([fullName, email, password].some((field) => field?.trim() === "")) {
     throw new ApiError(400, "All fields are required");
@@ -68,15 +67,6 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  // get user details from frontend
-  // validation - not empty
-  // check if user exists: username, email
-  // check for password
-  // create access token
-  // create refresh token
-  // save refresh token in db
-  // return res
-
   const { email, password } = req.body;
 
   if ([email, password].some((field) => field?.trim() === "")) {

@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Budget } from "../models/budget.model.js";
+import { sendEmail } from "../services/email.service.js";
 
 const createBudget = asyncHandler(async (req, res) => {
   const {
@@ -45,11 +46,38 @@ const createBudget = asyncHandler(async (req, res) => {
 });
 
 const getBudget = asyncHandler(async (req, res) => {
-  console.log(req.user._id);
   const budget = await Budget.find({
     user: req.user._id,
   });
 
+  //  send email if budget limit is reached
+  const user = await User.findById(req.user._id);
+
+  const title = budget.budget_title;
+  const budget_amount = budget.budget_amount;
+  const threshold_amount = budget.threshold_amount;
+
+  const totalSpent = await Expense.aggregate([
+    {
+      $match: {
+        user: req.user._id,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: "$expense_amount" },
+      },
+    },
+  ]);
+
+  if (totalSpent.total > threshold_amount) {
+    sendEmail(
+      user.email,
+      "Reminder",
+      `You have a reminder for ${title} on ${date}`
+    );
+  }
   if (!budget) {
     throw new ApiError(404, "No budget found");
   }
