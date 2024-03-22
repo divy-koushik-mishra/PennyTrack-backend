@@ -3,6 +3,8 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Budget } from "../models/budget.model.js";
 import { sendEmail } from "../services/email.service.js";
+import { User } from "../models/user.model.js";
+import { Expense } from "../models/expense.model.js";
 
 const createBudget = asyncHandler(async (req, res) => {
   const {
@@ -71,11 +73,12 @@ const getBudget = asyncHandler(async (req, res) => {
     },
   ]);
 
-  if (totalSpent.total > threshold_amount) {
+  if (totalSpent.total > budget_amount) {
+    console.log("Budget Exceeded");
     sendEmail(
       user.email,
-      "Reminder",
-      `You have a reminder for ${title} on ${date}`
+      "Budget Exceeded",
+      `You have exceeded your ${title} budget.`
     );
   }
   if (!budget) {
