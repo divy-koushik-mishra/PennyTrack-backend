@@ -48,6 +48,7 @@ const createBudget = asyncHandler(async (req, res) => {
 });
 
 const getBudget = asyncHandler(async (req, res) => {
+  console.log("Entered getBudget");
   const budget = await Budget.find({
     user: req.user._id,
   });
@@ -73,6 +74,7 @@ const getBudget = asyncHandler(async (req, res) => {
     },
   ]);
 
+  console.log(budget);
   if (totalSpent.total > budget_amount) {
     console.log("Budget Exceeded");
     sendEmail(

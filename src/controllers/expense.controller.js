@@ -106,10 +106,37 @@ const getTotalExpense = asyncHandler(async (req, res) => {
     );
 });
 
+const getExpenseByCategory = asyncHandler(async (req, res) => {
+  const expense = await Expense.aggregate([
+    {
+      $match: {
+        user: req.user._id,
+      },
+    },
+    {
+      $group: {
+        _id: "$expense_category",
+        total: { $sum: "$expense_amount" },
+      },
+    },
+  ]);
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        expense,
+        "Expense by category retrieved successfully"
+      )
+    );
+});
+
 export {
   createExpense,
   getExpense,
   updateExpense,
   deleteExpense,
   getTotalExpense,
+  getExpenseByCategory,
 };
